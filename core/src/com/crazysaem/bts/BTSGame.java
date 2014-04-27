@@ -11,6 +11,7 @@ public class BTSGame extends ApplicationAdapter
   private SpriteBatch batch;
   private Coins coins;
   private BitmapFont font;
+  private Player player;
 
   @Override
   public void create()
@@ -18,17 +19,22 @@ public class BTSGame extends ApplicationAdapter
     batch = new SpriteBatch();
     coins = new Coins();
     font = new BitmapFont();
+    player = new Player();
   }
 
   @Override
   public void render()
   {
+    float delta = Gdx.graphics.getRawDeltaTime();
+
     Gdx.gl.glClearColor(1, 0, 0, 1);
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
     batch.begin();
-    coins.update(Gdx.graphics.getRawDeltaTime());
+    coins.update(delta);
     coins.render(batch);
-    font.draw(batch, "FPS: " + Gdx.graphics.getFramesPerSecond(), 0, Gdx.graphics.getHeight());
+    player.update(delta);
+    player.render(batch);
+    font.draw(batch, "FPS: " + Gdx.graphics.getFramesPerSecond() + " DELTA: " + delta, 0, Gdx.graphics.getHeight());
     batch.end();
   }
 
